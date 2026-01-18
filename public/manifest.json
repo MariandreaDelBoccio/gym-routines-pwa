@@ -1,0 +1,19 @@
+{
+  "name": "Gym Routines - Rutinas de Gimnasio",
+  "short_name": "Gym Routines",
+  "description": "Aplicación para crear y gestionar rutinas de gimnasio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#22c55e",
+  "orientation": "portrait-primary",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ]
+}
