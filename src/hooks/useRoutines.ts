@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Routine, Exercise } from '../types/routine';
 import { storageService } from '../services/storage';
+import { darioRoutines } from '../data/darioRoutine';
 
 export function useRoutines() {
   const [routines, setRoutines] = useState<Routine[]>([]);
@@ -127,6 +128,33 @@ export function useRoutines() {
     return routines.find(r => r.id === id);
   }, [routines]);
 
+  const loadDarioRoutines = useCallback(() => {
+    const addedRoutines: Routine[] = [];
+    
+    darioRoutines.forEach(routineTemplate => {
+      // Verificar si ya existe una rutina con este nombre
+      const existingRoutine = routines.find(r => r.name === routineTemplate.name);
+      
+      if (!existingRoutine) {
+        const newRoutine: Routine = {
+          ...routineTemplate,
+          id: crypto.randomUUID(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+
+        storageService.addRoutine(newRoutine);
+        addedRoutines.push(newRoutine);
+      }
+    });
+    
+    if (addedRoutines.length > 0) {
+      setRoutines(prev => [...prev, ...addedRoutines]);
+    }
+    
+    return addedRoutines;
+  }, [routines]);
+
   return {
     routines,
     loading,
@@ -137,5 +165,6 @@ export function useRoutines() {
     updateExercise,
     deleteExercise,
     getRoutineById,
+    loadDarioRoutines,
   };
 }

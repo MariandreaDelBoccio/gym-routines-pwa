@@ -9,9 +9,11 @@ import type { RoutineFormData } from '../types/routine';
 
 interface HomeProps {
   onRoutineSelect: (routineId: string) => void;
+  user: string | null;
+  onLogout: () => void;
 }
 
-export function Home({ onRoutineSelect }: HomeProps) {
+export function Home({ onRoutineSelect, user, onLogout }: HomeProps) {
   const { routines, loading, addRoutine, deleteRoutine } = useRoutines();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [routineToDelete, setRoutineToDelete] = useState<string | null>(null);
@@ -39,12 +41,23 @@ export function Home({ onRoutineSelect }: HomeProps) {
       <div className="max-w-md mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Mis Rutinas
-          </h1>
-          <p className="text-gray-600">
-            Gestiona tus entrenamientos de forma sencilla
-          </p>
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                Hola, {user}
+                {user === 'Dario' && (
+                  <span className="ml-2 text-lg">💪</span>
+                )}
+              </h1>
+            </div>
+            <Button
+              variant="secondary"
+              onClick={onLogout}
+              className="text-sm px-3 py-1"
+            >
+              Salir
+            </Button>
+          </div>
         </div>
 
         {/* Create Button */}
